@@ -20,7 +20,7 @@ library:
   source-dirs: src
 
 executables:
-  protocol-exe:
+  protocol:
     main:                Main.hs
     source-dirs:         app
     ghc-options:

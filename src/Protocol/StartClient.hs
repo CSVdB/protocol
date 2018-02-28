@@ -7,4 +7,4 @@ import Protocol.ServerLocation
 import Network.Socket
 
 startClient :: SockAddr -> IO ()
-startClient info = undefined
+startClient info = putStrLn "startClient started"

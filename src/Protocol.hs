@@ -7,7 +7,8 @@ import Protocol.StartClient
 
 client :: IO ()
 client = do
-    putStrLn "works"
+    (disp, sett) <- getInstructions
+    execute disp sett
 
-execute :: Dispatch -> IO ()
-execute (DispatchStartClient sockAddr) = startClient sockAddr
+execute :: Dispatch -> Settings -> IO ()
+execute (DispatchStartClient sockAddr) _ = startClient sockAddr
