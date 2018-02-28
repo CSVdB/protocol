@@ -1,5 +1,3 @@
-{-# LANGUAGE RecordWildCards #-}
-
 module Protocol.OptParse
     ( module Protocol.OptParse
     , module Protocol.OptParse.Types
@@ -14,7 +12,6 @@ import Network.Socket
 
 import Options.Applicative
 import System.Environment
-import System.Exit (die)
 
 getInstructions :: IO Instructions
 getInstructions = do
@@ -43,19 +40,8 @@ getDispatch cmd flags = do
     getDispatchFromConfig cmd flags cfg
 
 getDispatchFromConfig :: Command -> Flags -> Configuration -> IO Dispatch
-getDispatchFromConfig CommandStartClient ServerLocation {..} _ = do
-    let service = Just $ fromMaybe dftServiceName serviceName
-    let host = Just $ fromMaybe dftHost hostName
-    addrInfos <- getAddrInfo Nothing host service
-    case addrInfos of
-        [] -> die "This service name and hostname don't give any addresses!"
-        (addrInfo:_) -> pure . DispatchStartClient $ addrAddress addrInfo
-
-dftServiceName :: ServiceName
-dftServiceName = "31415"
-
-dftHost :: HostName
-dftHost = "pris.lumi.guide"
+getDispatchFromConfig CommandStartClient serverLoc _ =
+    pure $ DispatchStartClient serverLoc
 
 getConfig :: Flags -> IO Configuration
 getConfig _ = pure Configuration

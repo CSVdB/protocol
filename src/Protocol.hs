@@ -11,4 +11,4 @@ client = do
     execute disp sett
 
 execute :: Dispatch -> Settings -> IO ()
-execute (DispatchStartClient sockAddr) _ = startClient sockAddr
+execute (DispatchStartClient serverLoc) _ = startClient serverLoc

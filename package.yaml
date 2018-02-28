@@ -1,5 +1,5 @@
 name:                protocol
-version:             0.1.0.0
+version:             0.0.0.0
 github:              "Nickske666/protocol"
 license:             BSD3
 author:              "Nick Van den Broeck"
@@ -15,11 +15,18 @@ dependencies:
 - text >= 1.2 && < 2.0
 - network >= 2.6 && < 3.0
 - optparse-applicative >= 0.14 && < 0.15
-- aeson >= 1.2 && < 1.3
-- aeson-pretty >= 0.8 && < 0.9
 
 library:
   source-dirs: src
+  exposed-modules:
+  - Protocol
+  - Protocol.Connection
+  - Protocol.Process
+  - Protocol.Reply
+  - Protocol.Request
+  - Protocol.ServerLocation
+  - Protocol.Socket
+  - Protocol.StartClient
 
 executables:
   protocol:

@@ -2,34 +2,20 @@ module Protocol.StartClient where
 
 import Import hiding (ByteString)
 
-import Protocol.Socket
+import Protocol.Connection
+import Protocol.Process
+import Protocol.Reply
+import Protocol.Request
+import Protocol.ServerLocation
 
-import Control.Concurrent
-import Data.ByteString.Lazy (ByteString)
-import Network.Socket hiding (recv)
-import Network.Socket.ByteString.Lazy
+startClient :: ServerLocation -> IO ()
+startClient addr = flip reply process =<< getConnection addr
 
-startClient :: SockAddr -> IO ()
-startClient addr = do
-    sock <- getSocketBoundToAddr addr
-    listen sock 2
-    loop sock
-
-loop :: Socket -> IO ()
-loop sock = do
-    (conn, _) <- accept sock
-    _ <- forkIO $ runConn conn
-    loop sock
+reply :: Connection -> (Request -> IO Reply) -> IO ()
+reply conn getReply =
+    forever $
+    sendConn conn . encodeReply =<<
+    getReply . decodeRequest =<< recvConn conn numberOfBytes
 
 numberOfBytes :: Int64
 numberOfBytes = 1000
-
-runConn :: Socket -> IO ()
-runConn conn = do
-    message <- recv conn numberOfBytes
-    responseBS <- processMessage message
-    sendAll conn responseBS
-    close conn
-
-processMessage :: ByteString -> IO ByteString
-processMessage = undefined

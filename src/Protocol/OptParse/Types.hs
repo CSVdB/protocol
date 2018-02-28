@@ -1,7 +1,5 @@
 module Protocol.OptParse.Types where
 
-import Network.Socket
-
 import Protocol.ServerLocation
 
 type Arguments = (Command, Flags)
@@ -23,5 +21,5 @@ data Settings =
     deriving (Show, Eq)
 
 newtype Dispatch =
-    DispatchStartClient SockAddr
+    DispatchStartClient ServerLocation
     deriving (Show, Eq)
