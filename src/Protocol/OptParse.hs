@@ -43,7 +43,7 @@ getDispatch cmd flags = do
     getDispatchFromConfig cmd flags cfg
 
 getDispatchFromConfig :: Command -> Flags -> Configuration -> IO Dispatch
-getDispatchFromConfig CommandStartClient (ServerLocation {..}) _ = do
+getDispatchFromConfig CommandStartClient ServerLocation {..} _ = do
     let service = Just $ fromMaybe dftServiceName serviceName
     let host = Just $ fromMaybe dftHost hostName
     addrInfos <- getAddrInfo Nothing host service
@@ -58,7 +58,7 @@ dftHost :: HostName
 dftHost = "pris.lumi.guide"
 
 getConfig :: Flags -> IO Configuration
-getConfig _ = pure $ Configuration
+getConfig _ = pure Configuration
 
 runArgumentsParser :: [String] -> ParserResult Arguments
 runArgumentsParser = execParserPure prefs_ argParser
