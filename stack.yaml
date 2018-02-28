@@ -1,0 +1,9 @@
+flags: {}
+extra-package-dbs: []
+packages:
+extra-deps:
+- genvalidity-0.4.0.4
+- validity-0.4.0.4
+- validity-bytestring-0.1.0.1
+- optparse-applicative-0.14.2.0
+resolver: lts-9.0
